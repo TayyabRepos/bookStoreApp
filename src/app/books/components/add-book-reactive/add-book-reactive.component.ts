@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -13,7 +14,10 @@ import { BookService } from '../../services/book.service';
   styleUrls: ['./add-book-reactive.component.scss'],
 })
 export class AddBookReactiveComponent implements OnInit {
-  constructor(private _bookSerice: BookService) {}
+  constructor(
+    private _bookSerice: BookService,
+    private _formBuilder: FormBuilder
+  ) {}
   public addBookForm: FormGroup;
 
   public prices: any[] = [
@@ -60,22 +64,22 @@ export class AddBookReactiveComponent implements OnInit {
   }
 
   public formInit(): void {
-    this.addBookForm = new FormGroup({
-      title: new FormControl('Book', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      author: new FormControl('Sample Author', Validators.required),
-      totalPages: new FormControl(null, Validators.required),
-      price: new FormGroup({
-        value: new FormControl(100, Validators.required),
-        currency: new FormControl('PKR'),
+    this.addBookForm = this._formBuilder.group({
+      title: [
+        'this is default',
+        [Validators.required, Validators.minLength(3)],
+      ],
+      author: '',
+      totalPages: '',
+      price: this._formBuilder.group({
+        value: '',
+        currency: '',
       }),
-      PublishedOn: new FormControl(null, Validators.required),
-      isPublished: new FormControl(true),
-      formatType: new FormControl(),
-      docControl: new FormControl(),
-      pdfControl: new FormControl(),
+      PublishedOn: '',
+      isPublished: '',
+      formatType: '',
+      docControl: '',
+      pdfControl: '',
     });
   }
   public saveBook(): void {
