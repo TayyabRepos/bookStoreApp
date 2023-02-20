@@ -1,0 +1,17 @@
+<h2>{{ TitlePage }}</h2>
+<button (click)="increase()">Counter++</button>
+<button (click)="decrease()">Counter--</button>
+<br /><br />
+<span>{{ _counter.counter }}</span> <br />
+<button mat-raised-button color="primary" [routerLink]="'new'">
+  Add New Book
+</button>
+<br />
+<br />
+<button mat-raised-button color="primary" [routerLink]="'new-reactive'">
+  Add New Book Reactive
+</button>
+<br />
+<br />
+<button class="btn" routerLink="recent">Recent Books</button>
+<app-book-cards [all-books]="books"></app-book-cards>

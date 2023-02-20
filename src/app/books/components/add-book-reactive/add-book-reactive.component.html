@@ -1,0 +1,104 @@
+<button mat-raised-button (click)="updateValue()">Update Button</button> <br />
+
+<form class="bookForm" (submit)="saveBook()" [formGroup]="addBookForm">
+  <h1>Add New Book Using Reactive Form</h1>
+  <p>Book Value{{ addBookForm.get("title")?.value }}</p>
+  <p>Book Errors {{ addBookForm.get("title")?.errors | json }}</p>
+  <p>Author{{ addBookForm.get("authors")?.value }}</p>
+  <p>Author Errors {{ addBookForm.get("authors")?.errors | json }}</p>
+  <p>TotalPages Value{{ addBookForm.get("totalPages")?.value }}</p>
+  <p>TotalPages Errors {{ addBookForm.get("totalPages")?.errors | json }}</p>
+  <p>Price Value{{ addBookForm.get("price")?.value | json }}</p>
+  <p>Price Errors {{ addBookForm.get("price")?.errors | json }}</p>
+  <p>Date Value{{ addBookForm.get("PublishedOn") }}</p>
+  <p>Date Errors {{ addBookForm.get("PublishedOn")?.errors | json }}</p>
+  <p>Toggle Value{{ addBookForm.get("isPublished")?.value }}</p>
+  <p>Toggle Errors {{ addBookForm.get("isPublished")?.errors | json }}</p>
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input matInput name="Title" placeholder="Title" formControlName="title" />
+    <mat-icon matSuffix>title</mat-icon>
+    <mat-hint> {{ titleErrorMessage }} </mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Author</mat-label>
+    <input
+      matInput
+      name="author"
+      placeholder="Author"
+      formControlName="author"
+    />
+    <mat-icon matSuffix>person</mat-icon>
+    <mat-hint>
+      {{ titleAuthorMessage }}
+    </mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>TotalPages</mat-label>
+    <input
+      matInput
+      type="number"
+      name="TotalPages"
+      placeholder="TotalPages"
+      formControlName="totalPages"
+    />
+    <mat-icon matSuffix>auto_stories</mat-icon>
+    <mat-hint *ngIf="addBookForm.get('totalPages')?.errors?.required"
+      >Total Pages field is required!</mat-hint
+    >
+  </mat-form-field>
+  <div class="price-container" formGroupName="price">
+    <mat-form-field appearance="fill">
+      <mat-label>Currency</mat-label>
+      <mat-select name="currency" formControlName="currency">
+        <mat-option
+          *ngFor="let currency of currencies"
+          [value]="currency.value"
+        >
+          {{ currency.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <mat-select name="price" formControlName="value">
+        <mat-option *ngFor="let price of prices" [value]="price.value">
+          {{ price.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-form-field appearance="fill">
+    <mat-label>Published On</mat-label>
+    <input
+      ngModel
+      name="PublishedOn"
+      matInput
+      [matDatepicker]="picker"
+      formControlName="PublishedOn"
+    />
+    <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-hint *ngIf="addBookForm.get('PublishedOn')?.errors?.required"
+      >Please enter the date!</mat-hint
+    >
+  </mat-form-field>
+
+  <mat-slide-toggle name="toggle" formControlName="isPublished" class="toggle"
+    >Is Published</mat-slide-toggle
+  >
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="addBookForm.invalid"
+    type="submit"
+  >
+    Save
+  </button>
+</form>
+
+<p>{{ addBookForm.value | json }}</p>

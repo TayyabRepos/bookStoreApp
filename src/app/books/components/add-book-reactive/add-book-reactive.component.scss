@@ -1,0 +1,18 @@
+.bookForm {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+}
+
+.toggle {
+  margin-bottom: 20px;
+}
+.mat-hint {
+  color: red;
+}
+
+.price-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
