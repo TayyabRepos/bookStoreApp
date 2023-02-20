@@ -33,6 +33,10 @@ export class AddBookReactiveComponent implements OnInit {
   ngOnInit(): void {
     this.formInit();
     // console.log(this.addBookForm.get('title'));
+    const formatTypeControl = this.addBookForm.get('formatType');
+    formatTypeControl?.valueChanges.subscribe((value) => {
+      this.formateTypeChanged(value);
+    });
     const titleControl = this.addBookForm.get('title');
     titleControl?.valueChanges.subscribe((x) => {
       this.validateTitleControl(titleControl as FormControl);
@@ -69,6 +73,9 @@ export class AddBookReactiveComponent implements OnInit {
       }),
       PublishedOn: new FormControl(null, Validators.required),
       isPublished: new FormControl(true),
+      formatType: new FormControl(),
+      docControl: new FormControl(),
+      pdfControl: new FormControl(),
     });
   }
   public saveBook(): void {
@@ -100,5 +107,20 @@ export class AddBookReactiveComponent implements OnInit {
     ) {
       this.titleAuthorMessage = 'Author Field is required!';
     }
+  }
+
+  private formateTypeChanged(value: string): void {
+    // Getting refs of controls
+    const pdfControl = this.addBookForm.get('pdfControl');
+    const docControl = this.addBookForm.get('docControl');
+    if (value === 'pdf') {
+      pdfControl?.addValidators([Validators.required, Validators.minLength(3)]);
+      docControl?.clearValidators();
+    } else if (value === 'doc') {
+      docControl?.addValidators([Validators.required, Validators.minLength(3)]);
+      pdfControl?.clearValidators();
+    }
+    pdfControl?.updateValueAndValidity();
+    docControl?.updateValueAndValidity();
   }
 }

@@ -1,7 +1,7 @@
 <button mat-raised-button (click)="updateValue()">Update Button</button> <br />
 
 <form class="bookForm" (submit)="saveBook()" [formGroup]="addBookForm">
-  <h1>Add New Book Using Reactive Form</h1>
+  <!-- <h1>Add New Book Using Reactive Form</h1>
   <p>Book Value{{ addBookForm.get("title")?.value }}</p>
   <p>Book Errors {{ addBookForm.get("title")?.errors | json }}</p>
   <p>Author{{ addBookForm.get("authors")?.value }}</p>
@@ -13,7 +13,39 @@
   <p>Date Value{{ addBookForm.get("PublishedOn") }}</p>
   <p>Date Errors {{ addBookForm.get("PublishedOn")?.errors | json }}</p>
   <p>Toggle Value{{ addBookForm.get("isPublished")?.value }}</p>
-  <p>Toggle Errors {{ addBookForm.get("isPublished")?.errors | json }}</p>
+  <p>Toggle Errors {{ addBookForm.get("isPublished")?.errors | json }}</p> -->
+
+  <mat-radio-group
+    aria-label="Select an option"
+    class="toggle"
+    formControlName="formatType"
+  >
+    <mat-radio-button value="pdf">PDF</mat-radio-button>
+    <mat-radio-button value="doc">DOC</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Doc Control</mat-label>
+    <input
+      matInput
+      name="docControl"
+      placeholder="Doc Control"
+      formControlName="docControl"
+    />
+    <mat-icon matSuffix>title</mat-icon>
+    <mat-hint> {{ titleErrorMessage }} </mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>PDF Control</mat-label>
+    <input
+      matInput
+      name="pdfControl"
+      placeholder="PDF Control"
+      formControlName="pdfControl"
+    />
+    <mat-icon matSuffix>title</mat-icon>
+    <mat-hint> {{ titleErrorMessage }} </mat-hint>
+  </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Title</mat-label>
     <input matInput name="Title" placeholder="Title" formControlName="title" />
